@@ -21,6 +21,15 @@ You can also customize setting for following features:
 * You can customize Width.
 * You can set the data annotation style of the google plus like and share button.
 
+= Rate Us / Feedback =
+
+Please take the time to let us and others know about your experiences by leaving a review, so that we can improve the plugin for you and other users.
+
+= Want More? =
+
+If You Want more functionality or some modifications, just drop us a line what you want and We will try to add or modify the plugin functions.
+
+If you like the plugin please [Donate here](http://tinyurl.com/owxtkmt). 
 
 == Installation ==
 
