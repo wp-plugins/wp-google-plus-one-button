@@ -58,6 +58,9 @@ After saving your settings you should refresh your web page where the Facebook B
 
 
 == Screenshots ==
+1. Plugin options will be found at Settings->WP Google Plus one Button.
+2. Position, Width, Language, Size and Style settings for WP Google Plus one Button.
+3. Google plus one button shows with the content with like, comment and share functionality.
 
 == PHP Version ==
 
