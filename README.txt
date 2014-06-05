@@ -15,7 +15,7 @@ You can also customize setting for following features:
 
 
 * You can hide/show google plus like and share button on posts/archive/pages/home.
-* You can show google plus like and share button at the top and/or botton of content of your posts/home/pages/archive.
+* You can show google plus like and share button at the top and/or bottom of content of your posts/home/pages/archive.
 * You can customize the size of the google plus like and share button.
 * You can set different languages to the get the sharing details in your own native language.
 * You can customize Width.
