@@ -1,17 +1,17 @@
 <?php 
 /*
  * Plugin Name:WP Google Plus One Button
- * Plugin URI: http://www.vivacityinfotech.com/
+ * Plugin URI: http://vivacityinfotech.net
  * Description: A simple Google Plus Like and Share Button plugin for your posts/pages or Home page.
  * Version: 1.0
  * Author: Vivacity Infotech Pvt. Ltd.
- * Author URI: http://www.vivacityinfotech.com/
+ * Author URI: http://vivacityinfotech.net
  * License: GPL2
 */
 ?>
 <?php
 /*
-Copyright 2014  Vivacity InfoTech Pvt. Ltd.  (email : vivacityinfotech.jaipur@gmail.com)
+Copyright 2014  Vivacity InfoTech Pvt. Ltd.  (email : support@vivacityinfotech.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
