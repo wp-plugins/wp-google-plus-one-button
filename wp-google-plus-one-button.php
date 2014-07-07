@@ -3,7 +3,7 @@
  * Plugin Name:WP Google Plus One Button
  * Plugin URI: http://vivacityinfotech.net
  * Description: A simple Google Plus Like and Share Button plugin for your posts/pages or Home page.
- * Version: 1.0
+ * Version: 1.1
  * Author: Vivacity Infotech Pvt. Ltd.
  * Author URI: http://vivacityinfotech.net
  * License: GPL2
@@ -118,8 +118,8 @@ function viva_wp_google_plus_script(){
 function viva_init_call(){
 		add_submenu_page(
 						'options-general.php', // the slud name of the parent menu
-						'WP Google Plus One Button', // menu title of the plugin
-						'WP Google Plus One Button', // menu text to be displayed on the menu option
+						__('WP Google Plus One Button', 'wp-gpob-plugin' ), // menu title of the plugin
+						__('WP Google Plus One Button', 'wp-gpob-plugin' ), // menu text to be displayed on the menu option
 						10, // capabilities of the menu
 						'wp-google-plus-one-button', // menu slud
 						'viva_create_google_gui'	 // function to be called.
@@ -198,79 +198,84 @@ function viva_create_google_gui(){
 		$form_url = '';
 		echo '<link href="'.$plugin_url.'css/googlestyle.css" rel="stylesheet" type="text/css" />';
 		echo '<style type="text/css">#wpbody { background:url('.$plugin_url.'images/google.jpg) no-repeat !important;background-size: cover !important;}</style>';
-		echo '<script src="'.$plugin_url.'js/custom.js" type="text/javascript" /></script>';
+		?>
+		<script type="text/javascript">var msg1 = "<?= __('The width should be in between 120 to 450', 'wp-gpob-plugin' ) ?>";</script>
+		<script type="text/javascript">var msg2 = "<?= __('Width should be a number', 'wp-gpob-plugin' ) ?>";</script>
+		<?php 
+		echo '<script src="'.$plugin_url.'js/custom.js" type="text/javascript" /></script>'; 
+		
 		$data='';
 		$data = '<div id="google_container" >
 					<div class="wrapper">
-					<h1>WP Google Plus One Button</h1>
+					<h1>'.__('WP Google Plus One Button', 'wp-gpob-plugin' ).'</h1>
 					<form action="'.$form_url.'" method="post" >
 						<div class="google_settings">
 							<table>
 								<tr>
-									<td>Enable Google Plus Like and Share</td>
+									<td>'.__('Enable Google Plus Like and Share', 'wp-gpob-plugin' ).'</td>
 									<td><input type="checkbox" name="enable_google" '.$check.'/> </td>
 								</tr>
 								<tr>
-									<td>Place Google Plus Like at</td>
+									<td>'.__('Place Google Plus Like at', 'wp-gpob-plugin' ).'</td>
 									<td>
 										<select name="btn_pos">
-											<option value="above" '.$above.'>Above the content</option>
-											<option value="below" '.$below.'>Below the content</option>
+											<option value="above" '.$above.'>'.__('Above the content', 'wp-gpob-plugin' ).'</option>
+											<option value="below" '.$below.'>'.__('Below the content', 'wp-gpob-plugin' ).'</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
-									<td>Size</td>
+									<td>'.__('Size', 'wp-gpob-plugin' ).'</td>
 									<td>
 										<select name="btn_size">
-											<option value="small" '.$small.'>Small</option>
-											<option value="medium" '.$medium.'>Medium</option>
-											<option value="standard" '.$standard.'>Standard</option>
-											<option value="tall" '.$tall.'>Tall</option>
+											<option value="small" '.$small.'>'.__('Small', 'wp-gpob-plugin' ).'</option>
+											<option value="medium" '.$medium.'>'.__('Medium', 'wp-gpob-plugin' ).'</option>
+											<option value="standard" '.$standard.'>'.__('Standard', 'wp-gpob-plugin' ).'</option>
+											<option value="tall" '.$tall.'>'.__('Tall', 'wp-gpob-plugin' ).'</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
-									<td>Language settings</td>
+									<td>'.__('Language settings', 'wp-gpob-plugin' ).'</td>
 									<td>
 										<select name="lang">
-											<option value="ar" '.$ar.'>Arabic</option>
-											<option value="zh-HK" '.$zhHK.'>Chinese</option>
-											<option value="en-GB" '.$enGB.'>English (United Kingdom)</option>
-											<option value="en" '.$en.'>English (USA)</option>
-											<option value="fr" '.$fr.'>French (France) - ‪Français (France)</option>
-											<option value="de" '.$de.'>German - ‪Deutsch</option>
-											<option value="hi" '.$hi.'>Hindi - ‪हिन्दी</option>
-											<option value="it" '.$it.'>Italian - ‪Italiano</option>
-											<option value="ko" '.$ko.'>Korean - ‪한국어</option>
-											<option value="pt-PT" '.$ptPT.'>Portuguese (Portugal) - ‪Português (Portugal)</option>
-											<option value="ru" '.$ru.'>Russian - ‪Русский‬</option>
-											<option value="es" '.$es.'>Spanish (Spain) - ‪Español (España</option>
-											<option value="sv" '.$sv.'>Swedish - ‪Svenska‬</option>
-											<option value="tr" '.$tr.'>Turkish - ‪Türkçe</option>
-											<option value="uk" '.$uk.'>Ukrainian - ‪Українська</option>
-											<option value="ur" '.$ur.'>Urdu - ‫اردو‬</option>
+											<option value="ar" '.$ar.'>'.__('Arabic', 'wp-gpob-plugin' ).'</option>
+											<option value="zh-HK" '.$zhHK.'>'.__('Chinese', 'wp-gpob-plugin' ).'</option>
+											<option value="en-GB" '.$enGB.'>'.__('English (United Kingdom)', 'wp-gpob-plugin' ).'</option>
+											<option value="en" '.$en.'>'.__('English (USA)', 'wp-gpob-plugin' ).'</option>
+											<option value="fr" '.$fr.'>'.__('French (France) - ‪Français (France)', 'wp-gpob-plugin' ).'</option>
+											<option value="de" '.$de.'>'.__('German -Deutsch', 'wp-gpob-plugin' ).'</option>
+											<option value="hi" '.$hi.'>'.__('Hindi - ‪हिन्दी', 'wp-gpob-plugin' ).'</option>
+											<option value="it" '.$it.'>'.__('Italian - ‪Italiano', 'wp-gpob-plugin' ).'</option>
+											<option value="ko" '.$ko.'>'.__('Korean - ‪한국어', 'wp-gpob-plugin' ).'</option>
+											<option value="pt-PT" '.$ptPT.'>'.__('Portuguese (Portugal) - ‪Português (Portugal)', 'wp-gpob-plugin' ).'</option>
+											<option value="ru" '.$ru.'>'.__('Russian - ‪Русский‬', 'wp-gpob-plugin' ).'</option>
+											<option value="es" '.$es.'>'.__('Spanish (Spain) - ‪Español (España)', 'wp-gpob-plugin' ).'</option>
+											<option value="sv" '.$sv.'>'.__('Swedish - ‪Svenska‬', 'wp-gpob-plugin' ).'</option>
+											<option value="tr" '.$tr.'>'.__('Turkish - ‪Türkçe', 'wp-gpob-plugin' ).'</option>
+											<option value="uk" '.$uk.'>'.__('Ukrainian - ‪Українська', 'wp-gpob-plugin' ).'</option>
+											<option value="ur" '.$ur.'>'.__('Urdu - ‫اردو‬', 'wp-gpob-plugin' ).'</option>
 
 										</select>
 									</td>
 								</tr>
 								<tr>
-									<td>Width</td>
+									<td>'.__('Width', 'wp-gpob-plugin' ).'</td>
 									<td><input type="text" name="width" value="'.$width.'" id="google_width" /></td>
 								</tr>
 								<tr>
-									<td>Data Annotation</td>
+									<td>'.__('Data Annotation', 'wp-gpob-plugin' ).'</td>
 									<td>
 										<select name="dann">
-											<option value="inline" '.$inline.'>Inline</option>
-											<option value="bubble" '.$bubble.'>Bubble</option>
-											<option value="none" '.$none.'>None</option>
+											<option value="inline" '.$inline.'>'.__('Inline', 'wp-gpob-plugin' ).'</option>
+											<option value="bubble" '.$bubble.'>'.__('Bubble', 'wp-gpob-plugin' ).'</option>
+											<option value="none" '.$none.'>'.__('None', 'wp-gpob-plugin' ).'</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
 									<td></td>
-									<td><input type="submit" name="save_settings" value="Save" id="save_settings" /> </td>
+									<td><input type="submit" name="save_settings" value="'.__('Save', 'wp-gpob-plugin' ).'" id="save_settings" /> </td>
 								</tr>
 							</table>
 						</div>
@@ -286,4 +291,11 @@ function viva_create_google_gui(){
 	}
 	
 add_action('admin_menu', 'viva_init_call');
+
+//load translated strings
+add_action( 'init', 'wp_google_plus_load_textdomain' );
+
+function wp_google_plus_load_textdomain() {
+	load_plugin_textdomain( 'wp-gpob-plugin', false, basename( dirname( __FILE__ ) ) . '/languages' );
+}
 ?>

@@ -4,7 +4,6 @@ Donate link: http://tinyurl.com/owxtkmt
 Tags: Google Plus Share button, Google Plus Share, Plus one Share Button, Plus Social Plugin, Google plus Like, Google Like, Google Share, Like, Share, Google plus, Button, Social, Bookmark, Social Sharing, Sharing, Bookmarking, Opengraph, Protocol
 Requires at least:3.8.1
 Tested up to:3.8.1
-Stable tag: 1.0
 License: GPLv2 or later
 
 == Description ==
