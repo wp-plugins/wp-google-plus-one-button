@@ -2,7 +2,7 @@
 /*
  * Plugin Name:WP Google Plus One Button
  * Plugin URI: http://vivacityinfotech.net
- * Description: A simple Google Plus Like and Share Button plugin for your posts/pages or Home page.
+ * Description: A simple Google Plus Like and Share Button plugin for your posts/pages or Home page in your own language.
  * Version: 1.1
  * Author: Vivacity Infotech Pvt. Ltd.
  * Author URI: http://vivacityinfotech.net
