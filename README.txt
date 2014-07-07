@@ -67,6 +67,8 @@ PHP 5+ is supported.
 
 
 == Changelog ==
+= 1.1= 
+* Language Translation Feature added, POT files added.
 
 = 1.0 =
 * Stable version.
