@@ -69,7 +69,9 @@ PHP 5+ is supported.
 
 == Changelog ==
 = 1.2= 
-* Added feature to  You can hide/show google plus like and share button on posts/archive/pages/home/excerpt.
+* You can hide/show google plus like and share button on posts/archive/pages/home/excerpt.
+* You can set the Asynchrounus style of the google plus like and share button.
+* You can show google plus like and share button at the top and/or bottom and/or both top and bottom of content of your posts/home/pages/archive/excerpt.
 
 = 1.1= 
 * Language Translation Feature added, POT files added.
@@ -78,4 +80,3 @@ PHP 5+ is supported.
 * Stable version.
 
 Visit our <a href="http://vivacityinfotech.net/wp-google-plus-one-button/">demo page</a> for more information.
-
