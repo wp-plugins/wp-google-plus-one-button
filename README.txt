@@ -8,17 +8,18 @@ License: GPLv2 or later
 
 == Description ==
 
-A Simple Google Plus Like and Share plugin for your posts/home/pages/archive. You can like and share your content on google plus. This plugin let you add google plus like and share link above or below the content with different styles of sharing buttons. You can also view your sharing details on your own native language.
+A Simple Google Plus Like and Share plugin for your posts/home/pages/archive/excerpt. You can like and share your content on google plus. This plugin let you add google plus like and share link above or below or both the content with different styles of sharing buttons. You can also view your sharing details on your own native language.
 
 You can also customize setting for following features:
 
 
-* You can hide/show google plus like and share button on posts/archive/pages/home.
-* You can show google plus like and share button at the top and/or bottom of content of your posts/home/pages/archive.
+* You can hide/show google plus like and share button on posts/archive/pages/home/excerpt.
+* You can show google plus like and share button at the top and/or bottom and/or both top and bottom of content of your posts/home/pages/archive/excerpt.
 * You can customize the size of the google plus like and share button.
 * You can set different languages to the get the sharing details in your own native language.
 * You can customize Width.
 * You can set the data annotation style of the google plus like and share button.
+* You can set the Asynchrounus style of the google plus like and share button.
 
 = Rate Us / Feedback =
 
@@ -52,7 +53,7 @@ In WordPress admin panel go to "Settings", find the WP Google Plus One Button an
 
 = After the plugin installation and settings adjustment on the settings page it is still not working =
 You should click "Save Changes". Make sure that you got the message "Options Saved".
-After saving your settings you should refresh your web page where the Facebook Button icon should be placed.
+After saving your settings you should refresh your web page where the Google Button icon should be placed.
 
 
 
@@ -67,6 +68,9 @@ PHP 5+ is supported.
 
 
 == Changelog ==
+= 1.2= 
+* Added feature to  You can hide/show google plus like and share button on posts/archive/pages/home/excerpt.
+
 = 1.1= 
 * Language Translation Feature added, POT files added.
 

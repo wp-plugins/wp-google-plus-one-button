@@ -34,9 +34,11 @@ $icon_size = 'medium';
 $language = 'en';
 $width= 150;
 $data_ann = 'inline';
+$asyn ='';
+$btn_with='both';
 if(isset($_REQUEST['save_settings']))
-{
-		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann;
+{	
+		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
 		if(isset($_REQUEST['enable_google']))
 		{
 				$enable_plugin = 1;
@@ -46,7 +48,7 @@ if(isset($_REQUEST['save_settings']))
 		{
 				$enable_plugin = 0;
 				update_option('wp_google_plus_enable', 0);
-		}
+		}	
 				
 		$placing_loc = $_REQUEST['btn_pos'];
 		update_option('wp_google_plus_location', $placing_loc);
@@ -62,57 +64,224 @@ if(isset($_REQUEST['save_settings']))
 			$width= $_REQUEST['width'];
 			update_option('wp_google_plus_width', $width);
 		}
+		
 			
 		$data_ann = $_REQUEST['dann'];
 		update_option('wp_google_plus_ann',$data_ann);
+		
+		$asyn = $_REQUEST['asynchronus'];
+		update_option('wp_google_plus_asynchronus', $asyn);
+		
+		$btn_with = $_REQUEST['btn_with'];
+		update_option('wp_google_plus_btn_with', $btn_with);
+		
 		//add_filter('the_content','wp_google_plus_script');	
 		
 }
 else
 {
-		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann;
+		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
 		$enable_plugin =  get_option('wp_google_plus_enable');
 		$placing_loc = get_option('wp_google_plus_location');
 		$icon_size = get_option('wp_google_plus_icon_size');
 		$language = get_option('wp_google_plus_language');
 		$width= get_option('wp_google_plus_width');
 		$data_ann = get_option('wp_google_plus_ann');	
+		$asyn = get_option('wp_google_plus_asynchronus');		
+		$btn_with = get_option('wp_google_plus_btn_with');
 		
 }
-add_filter('the_content','viva_wp_google_plus_script');
+add_filter('the_excerpt','viva_wp_google_plus_script1');
 
-function viva_wp_google_plus_script(){
-		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann;
+function viva_wp_google_plus_script1(){
+		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
 		//echo $enable_plugin.$placing_loc.$icon_size.$language.$width.$data_ann;	 exit;
 		$newdata='';
-		$content = get_the_content();
-		if($enable_plugin == 1)
-		{	//return $enable_plugin." in";
-			$script = '<!-- Place this tag where you want the +1 button to render. -->
-				<div class="g-plusone" data-size="'.$icon_size.'" data-annotation="'.$data_ann.'" data-width="'.$width.'"></div>
-				
-				<!-- Place this tag after the last +1 button tag. -->
-				<script type="text/javascript">
-				window.___gcfg = {lang: \''.$language.'\'};
-				  (function() {
-					var po = document.createElement(\'script\'); po.type = \'text/javascript\'; po.async = true;
-					po.src = \'https://apis.google.com/js/platform.js\';
-					var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(po, s);
-				  })();
-				</script>';
+		$content = get_the_excerpt();
+		$post = get_the_ID();
+		$post_type = get_post_type( $post );
+		if( $btn_with == 'excerpt' ) {
+			if($enable_plugin == 1)
+			{	//return $enable_plugin." in";
 			
-			if($placing_loc == 'below')
-				$newdata = $content."<br/>".$script;
-			else
-				$newdata = $script."<br/>".$content;
+				if($asyn =='asyn') {
+					$script = '<!-- Place this tag where you want the +1 button to render. -->
+						<div class="g-plusone" data-size="'.$icon_size.'" data-annotation="'.$data_ann.'" data-width="'.$width.'"></div>
 				
+						<!-- Place this tag after the last +1 button tag. -->
+				
+				
+						<script type="text/javascript">
+						window.___gcfg = {lang: \''.$language.'\'};
+					  	(function() {
+							var po = document.createElement(\'script\'); po.type = \'text/javascript\'; po.async = true;
+							po.src = \'https://apis.google.com/js/platform.js\';
+							var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(po, s);
+					  	})();
+						</script>';	
+				}
+				else {
+				
+					$script = '<!-- Place this tag where you want the +1 button to render. -->
+						<div class="g-plusone" data-size="'.$icon_size.'" data-annotation="'.$data_ann.'" data-width="'.$width.'"></div>
+				
+						<!-- Place this tag after the last +1 button tag. -->
+				
+				
+						<script type="text/javascript" src="https://apis.google.com/js/platform.js">
+  							{lang:  \''.$language.'\'}
+						</script>';
+				}		
+			
+				if($placing_loc == 'below') {
+					if($btn_with == 'excerpt') 
+							$newdata = $content."<br/>".$script;
+					else {
+						$newdata = $content;
+					}
+				}
+				else if($placing_loc == 'above') {
+					if($btn_with == 'excerpt') 
+						$newdata = $script."<br/>".$content;
+					else 
+						$newdata = $content;
+				}
+				else {
+					if($btn_with == 'excerpt') {	
+						$newdata = $script."<br/>".$content."<br/>".$script;
+					}
+					else 
+						$newdata = $content;
+				}
+						
 			return $newdata;
 		}
 		else
 			//return $enable_plugin." out";
 			return $content = get_the_content();
+			
+			
+	}
+	else 
+		return $content = get_the_content();
 		
 }
+
+
+add_filter('the_content','viva_wp_google_plus_script');
+
+function viva_wp_google_plus_script(){
+		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
+		//echo $enable_plugin.$placing_loc.$icon_size.$language.$width.$data_ann;	 exit;
+		$newdata='';
+		$content = get_the_content();
+		$post = get_the_ID();
+		$post_type = get_post_type( $post );
+		if( $btn_with != 'excerpt' ) {
+			if($enable_plugin == 1)
+			{	//return $enable_plugin." in";
+			
+				if($asyn =='asyn') {
+					$script = '<!-- Place this tag where you want the +1 button to render. -->
+						<div class="g-plusone" data-size="'.$icon_size.'" data-annotation="'.$data_ann.'" data-width="'.$width.'"></div>
+				
+						<!-- Place this tag after the last +1 button tag. -->
+				
+				
+						<script type="text/javascript">
+						window.___gcfg = {lang: \''.$language.'\'};
+					  	(function() {
+							var po = document.createElement(\'script\'); po.type = \'text/javascript\'; po.async = true;
+							po.src = \'https://apis.google.com/js/platform.js\';
+							var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(po, s);
+					  	})();
+						</script>';	
+				}
+				else {
+				
+					$script = '<!-- Place this tag where you want the +1 button to render. -->
+						<div class="g-plusone" data-size="'.$icon_size.'" data-annotation="'.$data_ann.'" data-width="'.$width.'"></div>
+				
+						<!-- Place this tag after the last +1 button tag. -->
+				
+				
+						<script type="text/javascript" src="https://apis.google.com/js/platform.js">
+  							{lang:  \''.$language.'\'}
+						</script>';
+				}		
+			
+				if($placing_loc == 'below') {
+					if($btn_with == 'page') {
+						if( $post_type	== 'page') {
+							$newdata = $content."<br/>".$script;
+						}
+						else 
+							$newdata = $content;
+					}
+					else if($btn_with == 'post') {
+						if( $post_type	== 'post')	{
+							$newdata = $content."<br/>".$script;
+						}
+						else 
+							$newdata = $content;
+					}
+					else {
+						$newdata = $content."<br/>".$script;
+					}
+				}
+				else if($placing_loc == 'above') {
+					if($btn_with == 'page') {
+						if( $post_type == 'page') {		
+							$newdata = $script."<br/>".$content;
+						}
+						else 
+							$newdata = $content;
+					}
+					else if($btn_with == 'post') {
+						if( $post_type	== 'post')	{
+							$newdata = $script."<br/>".$content;
+						}
+						else 
+							$newdata = $content;
+					}
+					else {
+						$newdata = $script."<br/>".$content;
+					}
+					
+				}
+				else {
+					if($btn_with == 'page') {
+						if( $post_type == 'page') {		
+							$newdata = $script."<br/>".$content."<br/>".$script;
+						}
+						else 
+							$newdata = $content;
+					}
+					else if($btn_with == 'post') {
+						if( $post_type	== 'post')	{
+							$newdata = $script."<br/>".$content."<br/>".$script;
+						}
+						else 
+							$newdata = $content;
+					}
+					else {
+						$newdata = $script."<br/>".$content."<br/>".$script;
+					}
+				}
+						
+			return $newdata;
+		}
+		else
+			//return $enable_plugin." out";
+			return $content = get_the_content();
+			
+			
+	}
+	else 
+		return $content = get_the_content();
+		
+}
+
 
 
 function viva_init_call(){
@@ -120,33 +289,51 @@ function viva_init_call(){
 						'options-general.php', // the slud name of the parent menu
 						__('WP Google Plus One Button', 'wp-gpob-plugin' ), // menu title of the plugin
 						__('WP Google Plus One Button', 'wp-gpob-plugin' ), // menu text to be displayed on the menu option
-						10, // capabilities of the menu
+						'administrator', // capabilities of the menu
 						'wp-google-plus-one-button', // menu slud
 						'viva_create_google_gui'	 // function to be called.
 					);
 	}
 
 function viva_create_google_gui(){
-		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann;
+		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
 		
-		$above='';$below='';$small=''; $medium=''; $standard=''; $tall='';
+		$above='';$below='';$abovebelow='';$small=''; $medium=''; $standard=''; $tall=''; $post=''; $page=''; $both='';$excerpt='';
 		$af= ''; $am= ''; $ar = ''; $eq=''; $bn= ''; $bg= ''; $ca= ''; $zhHK = '';$zhCN= ''; $zhTW= ''; $hr= '';
-		$cs= ''; $da= ''; $ni= ''; $enGB = ''; $en = ''; $et= ''; $fil= ''; $fi= ''; $frCA= ''; $fr = ''; 
+		$cs= ''; $da= ''; $ni= ''; $enGB = ''; $en = '';  $et= ''; $fil= ''; $fi= ''; $frCA= ''; $fr = ''; 
 		$gl= '';	$de = ''; $el= ''; $gu= ''; $iw= ''; $hi = ''; $hu= ''; $is= ''; $id= ''; $it = ''; $ja= ''; $kn= '';
 		$ko = ''; $lv= ''; $lt= ''; $ms= ''; $ml= ''; $mr= ''; $no= ''; $fa= ''; $pl= ''; $ptPR= ''; $ptPT = '';
 		$ro= ''; $ru = ''; $sr= ''; $sk= ''; $sl= ''; $es419= ''; $es = ''; $sw= ''; $sv= ''; $ta= ''; $te= '';
 		$th= ''; $tr= ''; $uk = ''; $ur= ''; $vi= ''; $zu= '';
-		
+		 
+
 		if($enable_plugin == true)
 			$check=' checked=checked';
 		else
 			$check= ' ';
+			
+		if($asyn == true)
+			$check1=' checked=checked';
+		else
+			$check1= ' ';
 		
 		
 		if($placing_loc == 'above') 
 			$above = ' selected=selected'; 
-		else
+		else if($placing_loc == 'below') {
 			$below = ' selected=selected'; 
+		}
+		else 
+			$abovebelow = ' selected=selected'; 
+			
+		if($btn_with == 'post') 
+			$post = ' selected=selected'; 
+		else if($btn_with == 'page')
+			$page = ' selected=selected'; 
+		else if($btn_with == 'both')
+			$both = ' selected=selected'; 
+		else 
+			$excerpt = ' selected=selected'; 
 		
 		if($icon_size == 'small')
 			$small = ' selected=selected'; 
@@ -205,6 +392,8 @@ function viva_create_google_gui(){
 					$de = ' selected=selected'; 
 		if($language == 'el')
 					$el = ' selected=selected'; 
+		if($language == 'gu')
+					$gu = ' selected=selected'; 
 		if($language == 'de')
 					$de = ' selected=selected'; 
 		if($language == 'iw')
@@ -298,9 +487,15 @@ function viva_create_google_gui(){
 		<?php 
 		echo '<script src="'.$plugin_url.'js/custom.js" type="text/javascript" /></script>'; 
 		
+		$msg='';
+		 if(isset($_REQUEST['save_settings']))
+			{	
+				$msg =  "Plugin Setting Has Saved";
+			}
 		$data='';
 		$data = '<div id="google_container" >
 					<div class="wrapper">
+						<h4 id="">'.$msg.'</h4>
 					<h1>'.__('WP Google Plus One Button', 'wp-gpob-plugin' ).'</h1>
 					<form action="'.$form_url.'" method="post" >
 						<div class="google_settings">
@@ -315,6 +510,18 @@ function viva_create_google_gui(){
 										<select name="btn_pos">
 											<option value="above" '.$above.'>'.__('Above the content', 'wp-gpob-plugin' ).'</option>
 											<option value="below" '.$below.'>'.__('Below the content', 'wp-gpob-plugin' ).'</option>
+											<option value="abovebelow" '.$abovebelow.'>'.__('Both Above And Below the content', 'wp-gpob-plugin' ).'</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>'.__('Place Google Plus Like With', 'wp-gpob-plugin' ).'</td>
+									<td>
+										<select name="btn_with">
+											<option value="post" '.$post.'>'.__('With The Post', 'wp-gpob-plugin' ).'</option>
+											<option value="page" '.$page.'>'.__('With The Page', 'wp-gpob-plugin' ).'</option>
+											<option value="both" '.$both.'>'.__('Both Page And Post', 'wp-gpob-plugin' ).'</option>
+											<option value="excerpt" '.$excerpt.'>'.__('With The Excerpt', 'wp-gpob-plugin' ).'</option>
 										</select>
 									</td>
 								</tr>
@@ -342,7 +549,7 @@ function viva_create_google_gui(){
 											<option value="ca" '.$ca.'>'.__('Catalan - ‪català‬', 'wp-gpob-plugin' ).'</option>
 											<option value="zh-HK" '.$zhHK.'>'.__('Chinese (Hong Kong) - ‪中文（香港）‬', 'wp-gpob-plugin' ).'</option>
 											<option value="zh-CN" '.$zhCN.'>'.__('Chinese (Simplified) - ‪简体中文‬', 'wp-gpob-plugin' ).'</option>
-											<option value="zh-TW" '.$zhTw.'>'.__('Chinese (Traditional) - ‪繁體中文‬', 'wp-gpob-plugin' ).'</option>
+											<option value="zh-TW" '.$zhTW.'>'.__('Chinese (Traditional) - ‪繁體中文‬', 'wp-gpob-plugin' ).'</option>
 											<option value="hr" '.$hr.'>'.__('Croatian - ‪Hrvatski‬', 'wp-gpob-plugin' ).'</option>
 											<option value="cs" '.$cs.'>'.__('Czech - ‪Čeština‬', 'wp-gpob-plugin' ).'</option>
 											<option value="da" '.$da.'>'.__('Danish - ‪Dansk‬', 'wp-gpob-plugin' ).'</option>
@@ -411,6 +618,11 @@ function viva_create_google_gui(){
 											<option value="none" '.$none.'>'.__('None', 'wp-gpob-plugin' ).'</option>
 										</select>
 									</td>
+								</tr>
+								<tr>
+									<td> Asynchronus </td>
+									<td> <input type="checkbox" name="asynchronus"  '.$check1.' value="asyn"> </td>
+									</td>								
 								</tr>
 								<tr>
 									<td></td>
