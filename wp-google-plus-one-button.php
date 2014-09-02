@@ -3,10 +3,12 @@
  * Plugin Name:WP Google Plus One Button
  * Plugin URI: http://vivacityinfotech.net
  * Description: A simple Google Plus Like and Share Button plugin for your posts/pages or Home page in your own language.
- * Version: 1.2
+ * Version: 1.3
  * Author: Vivacity Infotech Pvt. Ltd.
  * Author URI: http://vivacityinfotech.net
  * License: GPL2
+Text Domain: wp-google-plus-one-button
+Domain Path: /languages/
 */
 ?>
 <?php
@@ -26,6 +28,14 @@ Copyright 2014  Vivacity InfoTech Pvt. Ltd.  (email : support@vivacityinfotech.c
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+ add_action('init', 'load_viva_googleplus');
+    function load_viva_googleplus()
+   {
+       load_plugin_textdomain('wp-google-plus-one-button', FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
+   }
+  
+
 ?>
 <?php
 $enable_plugin = 0;
@@ -170,11 +180,11 @@ function viva_wp_google_plus_script1(){
 
 add_filter('the_content','viva_wp_google_plus_script');
 
-function viva_wp_google_plus_script(){
+function viva_wp_google_plus_script($content){
 		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
 		//echo $enable_plugin.$placing_loc.$icon_size.$language.$width.$data_ann;	 exit;
 		$newdata='';
-		$content = get_the_content();
+		//$content = get_the_content();
 		$post = get_the_ID();
 		$post_type = get_post_type( $post );
 		if( $btn_with != 'excerpt' ) {
@@ -287,8 +297,8 @@ function viva_wp_google_plus_script(){
 function viva_init_call(){
 		add_submenu_page(
 						'options-general.php', // the slud name of the parent menu
-						__('WP Google Plus One Button', 'wp-gpob-plugin' ), // menu title of the plugin
-						__('WP Google Plus One Button', 'wp-gpob-plugin' ), // menu text to be displayed on the menu option
+						__('WP Google Plus One Button', 'wp-google-plus-one-button' ), // menu title of the plugin
+						__('WP Google Plus One Button', 'wp-google-plus-one-button' ), // menu text to be displayed on the menu option
 						'administrator', // capabilities of the menu
 						'wp-google-plus-one-button', // menu slud
 						'viva_create_google_gui'	 // function to be called.
@@ -482,151 +492,151 @@ function viva_create_google_gui(){
 		echo '<link href="'.$plugin_url.'css/googlestyle.css" rel="stylesheet" type="text/css" />';
 		echo '<style type="text/css">#wpbody { background:url('.$plugin_url.'images/google.jpg) no-repeat !important;background-size: cover !important;}</style>';
 		?>
-		<script type="text/javascript">var msg1 = "<?= __('The width should be in between 120 to 450', 'wp-gpob-plugin' ) ?>";</script>
-		<script type="text/javascript">var msg2 = "<?= __('Width should be a number', 'wp-gpob-plugin' ) ?>";</script>
+		<script type="text/javascript">var msg1 = "<?= __('The width should be in between 120 to 450', 'wp-google-plus-one-button' ) ?>";</script>
+		<script type="text/javascript">var msg2 = "<?= __('Width should be a number', 'wp-google-plus-one-button' ) ?>";</script>
 		<?php 
 		echo '<script src="'.$plugin_url.'js/custom.js" type="text/javascript" /></script>'; 
 		
 		$msg='';
 		 if(isset($_REQUEST['save_settings']))
 			{	
-				$msg =  "Plugin Setting Has Saved";
+				$msg =  __('Plugin Setting Has Saved', 'wp-google-plus-one-button' );
 			}
 		$data='';
 		$data = '<div id="google_container" >
 					<div class="wrapper">
 						<h4 id="">'.$msg.'</h4>
-					<h1>'.__('WP Google Plus One Button', 'wp-gpob-plugin' ).'</h1>
+					<h1>'.__('WP Google Plus One Button', 'wp-google-plus-one-button' ).'</h1>
 					<form action="'.$form_url.'" method="post" >
 						<div class="google_settings">
 							<table>
 								<tr>
-									<td>'.__('Enable Google Plus Like and Share', 'wp-gpob-plugin' ).'</td>
+									<td>'.__('Enable Google Plus Like and Share', 'wp-google-plus-one-button' ).'</td>
 									<td><input type="checkbox" name="enable_google" '.$check.'/> </td>
 								</tr>
 								<tr>
-									<td>'.__('Place Google Plus Like at', 'wp-gpob-plugin' ).'</td>
+									<td>'.__('Place Google Plus Like at', 'wp-google-plus-one-button' ).'</td>
 									<td>
 										<select name="btn_pos">
-											<option value="above" '.$above.'>'.__('Above the content', 'wp-gpob-plugin' ).'</option>
-											<option value="below" '.$below.'>'.__('Below the content', 'wp-gpob-plugin' ).'</option>
-											<option value="abovebelow" '.$abovebelow.'>'.__('Both Above And Below the content', 'wp-gpob-plugin' ).'</option>
+											<option value="above" '.$above.'>'.__('Above the content', 'wp-google-plus-one-button' ).'</option>
+											<option value="below" '.$below.'>'.__('Below the content', 'wp-google-plus-one-button' ).'</option>
+											<option value="abovebelow" '.$abovebelow.'>'.__('Both Above And Below the content', 'wp-google-plus-one-button' ).'</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
-									<td>'.__('Place Google Plus Like With', 'wp-gpob-plugin' ).'</td>
+									<td>'.__('Place Google Plus Like With', 'wp-google-plus-one-button' ).'</td>
 									<td>
 										<select name="btn_with">
-											<option value="post" '.$post.'>'.__('With The Post', 'wp-gpob-plugin' ).'</option>
-											<option value="page" '.$page.'>'.__('With The Page', 'wp-gpob-plugin' ).'</option>
-											<option value="both" '.$both.'>'.__('Both Page And Post', 'wp-gpob-plugin' ).'</option>
-											<option value="excerpt" '.$excerpt.'>'.__('With The Excerpt', 'wp-gpob-plugin' ).'</option>
+											<option value="post" '.$post.'>'.__('With The Post', 'wp-google-plus-one-button' ).'</option>
+											<option value="page" '.$page.'>'.__('With The Page', 'wp-google-plus-one-button' ).'</option>
+											<option value="both" '.$both.'>'.__('Both Page And Post', 'wp-google-plus-one-button' ).'</option>
+											<option value="excerpt" '.$excerpt.'>'.__('With The Excerpt', 'wp-google-plus-one-button' ).'</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
-									<td>'.__('Size', 'wp-gpob-plugin' ).'</td>
+									<td>'.__('Size', 'wp-google-plus-one-button' ).'</td>
 									<td>
 										<select name="btn_size">
-											<option value="small" '.$small.'>'.__('Small', 'wp-gpob-plugin' ).'</option>
-											<option value="medium" '.$medium.'>'.__('Medium', 'wp-gpob-plugin' ).'</option>
-											<option value="standard" '.$standard.'>'.__('Standard', 'wp-gpob-plugin' ).'</option>
-											<option value="tall" '.$tall.'>'.__('Tall', 'wp-gpob-plugin' ).'</option>
+											<option value="small" '.$small.'>'.__('Small', 'wp-google-plus-one-button' ).'</option>
+											<option value="medium" '.$medium.'>'.__('Medium', 'wp-google-plus-one-button' ).'</option>
+											<option value="standard" '.$standard.'>'.__('Standard', 'wp-google-plus-one-button' ).'</option>
+											<option value="tall" '.$tall.'>'.__('Tall', 'wp-google-plus-one-button' ).'</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
-									<td>'.__('Language settings', 'wp-gpob-plugin' ).'</td>
+									<td>'.__('Language settings', 'wp-google-plus-one-button' ).'</td>
 									<td>
 										<select name="lang">
-											<option value="af" '.$af.'>'.__('Afrikaans', 'wp-gpob-plugin' ).'</option>
-											<option value="am" '.$am.'>'.__('Amharic - ‪አማርኛ‬', 'wp-gpob-plugin' ).'</option>
-											<option value="ar" '.$ar.'>'.__('Arabic - ‫العربية‬', 'wp-gpob-plugin' ).'</option>
-											<option value="eq" '.$eq.'>'.__('Basque - ‪euskara‬', 'wp-gpob-plugin' ).'</option>
-											<option value="bn" '.$bn.'>'.__('Bengali - ‪বাংলা‬', 'wp-gpob-plugin' ).'</option>
-											<option value="bg" '.$bg.'>'.__('Bulgarian - ‪български‬', 'wp-gpob-plugin' ).'</option>
-											<option value="ca" '.$ca.'>'.__('Catalan - ‪català‬', 'wp-gpob-plugin' ).'</option>
-											<option value="zh-HK" '.$zhHK.'>'.__('Chinese (Hong Kong) - ‪中文（香港）‬', 'wp-gpob-plugin' ).'</option>
-											<option value="zh-CN" '.$zhCN.'>'.__('Chinese (Simplified) - ‪简体中文‬', 'wp-gpob-plugin' ).'</option>
-											<option value="zh-TW" '.$zhTW.'>'.__('Chinese (Traditional) - ‪繁體中文‬', 'wp-gpob-plugin' ).'</option>
-											<option value="hr" '.$hr.'>'.__('Croatian - ‪Hrvatski‬', 'wp-gpob-plugin' ).'</option>
-											<option value="cs" '.$cs.'>'.__('Czech - ‪Čeština‬', 'wp-gpob-plugin' ).'</option>
-											<option value="da" '.$da.'>'.__('Danish - ‪Dansk‬', 'wp-gpob-plugin' ).'</option>
-											<option value="ni" '.$ni.'>'.__('Dutch - ‪Nederlands‬', 'wp-gpob-plugin' ).'</option>
-											<option value="en-GB" '.$enGB.'>'.__('English (United Kingdom)', 'wp-gpob-plugin' ).'</option>
-											<option value="en" '.$en.'>'.__('English (USA)', 'wp-gpob-plugin' ).'</option>
-											<option value="et" '.$et.'>'.__('Estonian - ‪eesti‬', 'wp-gpob-plugin' ).'</option>
-											<option value="fil" '.$fil.'>'.__('Filipino', 'wp-gpob-plugin' ).'</option>
-											<option value="fi" '.$fi.'>'.__('Finnish - ‪Suomi‬', 'wp-gpob-plugin' ).'</option>
-											<option value="fr-CA" '.$frCA.'>'.__('French (Canada) - ‪Français (Canada)‬', 'wp-gpob-plugin' ).'</option>
-											<option value="fr" '.$fr.'>'.__('French (France) - ‪Français (France)', 'wp-gpob-plugin' ).'</option>
-											<option value="gl" '.$gl.'>'.__('Galician - ‪galego‬', 'wp-gpob-plugin' ).'</option>
-											<option value="de" '.$de.'>'.__('German -Deutsch', 'wp-gpob-plugin' ).'</option>
-											<option value="el" '.$el.'>'.__('Greek - ‪Ελληνικά‬', 'wp-gpob-plugin' ).'</option>
-											<option value="gu" '.$gu.'>'.__('Gujarati - ‪ગુજરાતી‬', 'wp-gpob-plugin' ).'</option>
-											<option value="iw" '.$iw.'>'.__('Hebrew - ‫עברית‬', 'wp-gpob-plugin' ).'</option>
-											<option value="hi" '.$hi.'>'.__('Hindi - ‪हिन्दी', 'wp-gpob-plugin' ).'</option>
-											<option value="hu" '.$hu.'>'.__('Hungarian - ‪magyar‬', 'wp-gpob-plugin' ).'</option>
-											<option value="is" '.$is.'>'.__('Icelandic - ‪íslenska‬', 'wp-gpob-plugin' ).'</option>
-											<option value="id" '.$id.'>'.__('Indonesian - ‪Bahasa Indonesia‬', 'wp-gpob-plugin' ).'</option>
-											<option value="it" '.$it.'>'.__('Italian - ‪Italiano', 'wp-gpob-plugin' ).'</option>
-											<option value="ja" '.$ja.'>'.__('Japanese - ‪日本語‬', 'wp-gpob-plugin' ).'</option>
-											<option value="kn" '.$kn.'>'.__('Kannada - ‪ಕನ್ನಡ‬', 'wp-gpob-plugin' ).'</option>
-											<option value="ko" '.$ko.'>'.__('Korean - ‪한국어', 'wp-gpob-plugin' ).'</option>
-											<option value="lv" '.$lv.'>'.__('Latvian - ‪latviešu‬', 'wp-gpob-plugin' ).'</option>
-											<option value="lt" '.$lt.'>'.__('Lithuanian - ‪lietuvių‬', 'wp-gpob-plugin' ).'</option>
-											<option value="ms" '.$ms.'>'.__('Malay - ‪Bahasa Melayu‬', 'wp-gpob-plugin' ).'</option>
-											<option value="ml" '.$ml.'>'.__('Malayalam - ‪മലയാളം‬‬', 'wp-gpob-plugin' ).'</option>
-											<option value="mr" '.$mr.'>'.__('Marathi - ‪मराठी‬‬', 'wp-gpob-plugin' ).'</option>
-											<option value="no" '.$no.'>'.__('Norwegian - ‪norsk‬', 'wp-gpob-plugin' ).'</option>
-											<option value="fa" '.$fa.'>'.__('Persian - ‫فارسی‬‬', 'wp-gpob-plugin' ).'</option>
-											<option value="pl" '.$pl.'>'.__('Polish - ‪polski‬‬', 'wp-gpob-plugin' ).'</option>
-											<option value="pt-PR" '.$ptPR.'>'.__('Portuguese (Brazil) - ‪Português (Brasil)‬‬‬', 'wp-gpob-plugin' ).'</option>
-											<option value="pt-PT" '.$ptPT.'>'.__('Portuguese (Portugal) - ‪Português (Portugal)', 'wp-gpob-plugin' ).'</option>
-											<option value="ro" '.$ro.'>'.__('Romanian - ‪română‬', 'wp-gpob-plugin' ).'</option>
-											<option value="ru" '.$ru.'>'.__('Russian - ‪Русский‬', 'wp-gpob-plugin' ).'</option>
-											<option value="sr" '.$sr.'>'.__('Serbian - ‪Српски‬', 'wp-gpob-plugin' ).'</option>
-											<option value="sk" '.$sk.'>'.__('Slovak - ‪Slovenčina‬‬', 'wp-gpob-plugin' ).'</option>
-											<option value="sl" '.$sl.'>'.__('Slovenian - ‪slovenščina‬‬', 'wp-gpob-plugin' ).'</option>
-											<option value="es-419" '.$es419.'>'.__('Spanish (Latin America) - ‪Español (Latinoamérica)‬', 'wp-gpob-plugin' ).'</option>
-											<option value="es" '.$es.'>'.__('Spanish (Spain) - ‪Español (España)', 'wp-gpob-plugin' ).'</option>
-											<option value="sw" '.$sw.'>'.__('Swahili - ‪Kiswahili‬', 'wp-gpob-plugin' ).'</option>
-											<option value="sv" '.$sv.'>'.__('Swedish - ‪Svenska‬', 'wp-gpob-plugin' ).'</option>
-											<option value="ta" '.$ta.'>'.__('Tamil - ‪தமிழ்‬', 'wp-gpob-plugin' ).'</option>
-											<option value="te" '.$te.'>'.__('Telugu - ‪తెలుగు‬', 'wp-gpob-plugin' ).'</option>
-											<option value="th" '.$th.'>'.__('Thai - ‪ไทย‬', 'wp-gpob-plugin' ).'</option>
-											<option value="tr" '.$tr.'>'.__('Turkish - ‪Türkçe', 'wp-gpob-plugin' ).'</option>
-											<option value="uk" '.$uk.'>'.__('Ukrainian - ‪Українська', 'wp-gpob-plugin' ).'</option>
-											<option value="ur" '.$ur.'>'.__('Urdu - ‫اردو‬', 'wp-gpob-plugin' ).'</option>
-											<option value="vi" '.$vi.'>'.__('Vietnamese - ‪Tiếng Việt‬', 'wp-gpob-plugin' ).'</option>
-											<option value="zu" '.$zu.'>'.__('Zulu - ‪isiZulu‬', 'wp-gpob-plugin' ).'</option>
+											<option value="af" '.$af.'>'.__('Afrikaans', 'wp-google-plus-one-button' ).'</option>
+											<option value="am" '.$am.'>'.__('Amharic - ‪አማርኛ‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="ar" '.$ar.'>'.__('Arabic - ‫العربية‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="eq" '.$eq.'>'.__('Basque - ‪euskara‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="bn" '.$bn.'>'.__('Bengali - ‪বাংলা‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="bg" '.$bg.'>'.__('Bulgarian - ‪български‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="ca" '.$ca.'>'.__('Catalan - ‪català‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="zh-HK" '.$zhHK.'>'.__('Chinese (Hong Kong) - ‪中文（香港）‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="zh-CN" '.$zhCN.'>'.__('Chinese (Simplified) - ‪简体中文‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="zh-TW" '.$zhTW.'>'.__('Chinese (Traditional) - ‪繁體中文‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="hr" '.$hr.'>'.__('Croatian - ‪Hrvatski‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="cs" '.$cs.'>'.__('Czech - ‪Čeština‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="da" '.$da.'>'.__('Danish - ‪Dansk‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="ni" '.$ni.'>'.__('Dutch - ‪Nederlands‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="en-GB" '.$enGB.'>'.__('English (United Kingdom)', 'wp-google-plus-one-button' ).'</option>
+											<option value="en" '.$en.'>'.__('English (USA)', 'wp-google-plus-one-button' ).'</option>
+											<option value="et" '.$et.'>'.__('Estonian - ‪eesti‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="fil" '.$fil.'>'.__('Filipino', 'wp-google-plus-one-button' ).'</option>
+											<option value="fi" '.$fi.'>'.__('Finnish - ‪Suomi‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="fr-CA" '.$frCA.'>'.__('French (Canada) - ‪Français (Canada)‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="fr" '.$fr.'>'.__('French (France) - ‪Français (France)', 'wp-google-plus-one-button' ).'</option>
+											<option value="gl" '.$gl.'>'.__('Galician - ‪galego‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="de" '.$de.'>'.__('German -Deutsch', 'wp-google-plus-one-button' ).'</option>
+											<option value="el" '.$el.'>'.__('Greek - ‪Ελληνικά‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="gu" '.$gu.'>'.__('Gujarati - ‪ગુજરાતી‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="iw" '.$iw.'>'.__('Hebrew - ‫עברית‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="hi" '.$hi.'>'.__('Hindi - ‪हिन्दी', 'wp-google-plus-one-button' ).'</option>
+											<option value="hu" '.$hu.'>'.__('Hungarian - ‪magyar‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="is" '.$is.'>'.__('Icelandic - ‪íslenska‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="id" '.$id.'>'.__('Indonesian - ‪Bahasa Indonesia‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="it" '.$it.'>'.__('Italian - ‪Italiano', 'wp-google-plus-one-button' ).'</option>
+											<option value="ja" '.$ja.'>'.__('Japanese - ‪日本語‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="kn" '.$kn.'>'.__('Kannada - ‪ಕನ್ನಡ‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="ko" '.$ko.'>'.__('Korean - ‪한국어', 'wp-google-plus-one-button' ).'</option>
+											<option value="lv" '.$lv.'>'.__('Latvian - ‪latviešu‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="lt" '.$lt.'>'.__('Lithuanian - ‪lietuvių‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="ms" '.$ms.'>'.__('Malay - ‪Bahasa Melayu‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="ml" '.$ml.'>'.__('Malayalam - ‪മലയാളം‬‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="mr" '.$mr.'>'.__('Marathi - ‪मराठी‬‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="no" '.$no.'>'.__('Norwegian - ‪norsk‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="fa" '.$fa.'>'.__('Persian - ‫فارسی‬‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="pl" '.$pl.'>'.__('Polish - ‪polski‬‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="pt-PR" '.$ptPR.'>'.__('Portuguese (Brazil) - ‪Português (Brasil)‬‬‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="pt-PT" '.$ptPT.'>'.__('Portuguese (Portugal) - ‪Português (Portugal)', 'wp-google-plus-one-button' ).'</option>
+											<option value="ro" '.$ro.'>'.__('Romanian - ‪română‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="ru" '.$ru.'>'.__('Russian - ‪Русский‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="sr" '.$sr.'>'.__('Serbian - ‪Српски‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="sk" '.$sk.'>'.__('Slovak - ‪Slovenčina‬‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="sl" '.$sl.'>'.__('Slovenian - ‪slovenščina‬‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="es-419" '.$es419.'>'.__('Spanish (Latin America) - ‪Español (Latinoamérica)‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="es" '.$es.'>'.__('Spanish (Spain) - ‪Español (España)', 'wp-google-plus-one-button' ).'</option>
+											<option value="sw" '.$sw.'>'.__('Swahili - ‪Kiswahili‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="sv" '.$sv.'>'.__('Swedish - ‪Svenska‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="ta" '.$ta.'>'.__('Tamil - ‪தமிழ்‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="te" '.$te.'>'.__('Telugu - ‪తెలుగు‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="th" '.$th.'>'.__('Thai - ‪ไทย‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="tr" '.$tr.'>'.__('Turkish - ‪Türkçe', 'wp-google-plus-one-button' ).'</option>
+											<option value="uk" '.$uk.'>'.__('Ukrainian - ‪Українська', 'wp-google-plus-one-button' ).'</option>
+											<option value="ur" '.$ur.'>'.__('Urdu - ‫اردو‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="vi" '.$vi.'>'.__('Vietnamese - ‪Tiếng Việt‬', 'wp-google-plus-one-button' ).'</option>
+											<option value="zu" '.$zu.'>'.__('Zulu - ‪isiZulu‬', 'wp-google-plus-one-button' ).'</option>
 
 										</select>
 									</td>
 								</tr>
 								<tr>
-									<td>'.__('Width', 'wp-gpob-plugin' ).'</td>
+									<td>'.__('Width', 'wp-google-plus-one-button' ).'</td>
 									<td><input type="text" name="width" value="'.$width.'" id="google_width" /></td>
 								</tr>
 								<tr>
-									<td>'.__('Data Annotation', 'wp-gpob-plugin' ).'</td>
+									<td>'.__('Data Annotation', 'wp-google-plus-one-button' ).'</td>
 									<td>
 										<select name="dann">
-											<option value="inline" '.$inline.'>'.__('Inline', 'wp-gpob-plugin' ).'</option>
-											<option value="bubble" '.$bubble.'>'.__('Bubble', 'wp-gpob-plugin' ).'</option>
-											<option value="none" '.$none.'>'.__('None', 'wp-gpob-plugin' ).'</option>
+											<option value="inline" '.$inline.'>'.__('Inline', 'wp-google-plus-one-button' ).'</option>
+											<option value="bubble" '.$bubble.'>'.__('Bubble', 'wp-google-plus-one-button' ).'</option>
+											<option value="none" '.$none.'>'.__('None', 'wp-google-plus-one-button' ).'</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
-									<td> Asynchronus </td>
+									<td>'.__('Asynchronous', 'wp-google-plus-one-button' ).'</td>
 									<td> <input type="checkbox" name="asynchronus"  '.$check1.' value="asyn"> </td>
 									</td>								
 								</tr>
 								<tr>
 									<td></td>
-									<td><input type="submit" name="save_settings" value="'.__('Save', 'wp-gpob-plugin' ).'" id="save_settings" /> </td>
+									<td><input type="submit" name="save_settings" value="'.__('Save', 'wp-google-plus-one-button' ).'" id="save_settings" /> </td>
 								</tr>
 							</table>
 						</div>
@@ -647,6 +657,6 @@ add_action('admin_menu', 'viva_init_call');
 add_action( 'init', 'wp_google_plus_load_textdomain' );
 
 function wp_google_plus_load_textdomain() {
-	load_plugin_textdomain( 'wp-gpob-plugin', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'wp-google-plus-one-button', false, basename( dirname( __FILE__ ) ) . '/languages' );
 }
 ?>
