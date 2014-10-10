@@ -79,8 +79,11 @@ if(isset($_REQUEST['save_settings']))
 		$data_ann = $_REQUEST['dann'];
 		update_option('wp_google_plus_ann',$data_ann);
 		
+		if(!empty($_REQUEST['asynchronus']))
+		{
 		$asyn = $_REQUEST['asynchronus'];
 		update_option('wp_google_plus_asynchronus', $asyn);
+		}
 		
 		$btn_with = $_REQUEST['btn_with'];
 		update_option('wp_google_plus_btn_with', $btn_with);
