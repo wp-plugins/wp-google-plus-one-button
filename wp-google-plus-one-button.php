@@ -6,7 +6,8 @@
  * Version: 1.3
  * Author: Vivacity Infotech Pvt. Ltd.
  * Author URI: http://vivacityinfotech.net
- * License: GPL2
+ * Author Email: support@vivacityinfotech.net
+* License: GPL2
 Text Domain: wp-google-plus-one-button
 Domain Path: /languages/
 */
