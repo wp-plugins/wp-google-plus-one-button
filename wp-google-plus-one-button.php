@@ -3,16 +3,15 @@
  * Plugin Name:WP Google Plus One Button
  * Plugin URI: http://vivacityinfotech.net
  * Description: A simple Google Plus Like and Share Button plugin for your posts/pages or Home page in your own language.
- * Version: 1.3
+ * Version: 1.4
  * Author: Vivacity Infotech Pvt. Ltd.
  * Author URI: http://vivacityinfotech.net
- * Author Email: support@vivacityinfotech.net
-* License: GPL2
+ * License: GPL2
 Text Domain: wp-google-plus-one-button
 Domain Path: /languages/
 */
 ?>
-<?php
+<?php error_reporting(0);
 /*
 Copyright 2014  Vivacity InfoTech Pvt. Ltd.  (email : support@vivacityinfotech.com)
 
@@ -47,6 +46,7 @@ $width= 150;
 $data_ann = 'inline';
 $asyn ='';
 $btn_with='both';
+
 if(isset($_REQUEST['save_settings']))
 {	
 		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
@@ -60,7 +60,13 @@ if(isset($_REQUEST['save_settings']))
 				$enable_plugin = 0;
 				update_option('wp_google_plus_enable', 0);
 		}	
-				
+			if($_REQUEST['select_custom_post_type'] !='')
+	{
+		 $get =$_REQUEST['select_custom_post_type'];
+ 
+		 	$getva = implode(',',$_REQUEST['select_custom_post_type']);
+ 		   update_option('select_custom_post_type', $getva);
+		 }	
 		$placing_loc = $_REQUEST['btn_pos'];
 		update_option('wp_google_plus_location', $placing_loc);
 		
@@ -70,6 +76,8 @@ if(isset($_REQUEST['save_settings']))
 		$language = $_REQUEST['lang'];
 		update_option('wp_google_plus_language', $language);
 		
+		$saprate_by_id_exclude = $_REQUEST['saprate_by_id_exclude'];
+		update_option('saprate_by_id_exclude', $saprate_by_id_exclude);
 		if(!empty($_REQUEST['width']))
 		{
 			$width= $_REQUEST['width'];
@@ -94,7 +102,7 @@ if(isset($_REQUEST['save_settings']))
 }
 else
 {
-		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
+		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with,$saprate_by_id_exclude;
 		$enable_plugin =  get_option('wp_google_plus_enable');
 		$placing_loc = get_option('wp_google_plus_location');
 		$icon_size = get_option('wp_google_plus_icon_size');
@@ -103,16 +111,16 @@ else
 		$data_ann = get_option('wp_google_plus_ann');	
 		$asyn = get_option('wp_google_plus_asynchronus');		
 		$btn_with = get_option('wp_google_plus_btn_with');
+		$saprate_by_id_exclude = get_option('saprate_by_id_exclude');
 		
 }
 add_filter('the_excerpt','viva_wp_google_plus_script1');
 
-function viva_wp_google_plus_script1(){
-		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
+function viva_wp_google_plus_script1($content){
+	global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with,$saprate_by_id_exclude;
 		//echo $enable_plugin.$placing_loc.$icon_size.$language.$width.$data_ann;	 exit;
 		$newdata='';
-		$content = get_the_excerpt();
-		$post = get_the_ID();
+	  $post = get_the_ID();
 		$post_type = get_post_type( $post );
 		if( $btn_with == 'excerpt' ) {
 			if($enable_plugin == 1)
@@ -185,16 +193,31 @@ function viva_wp_google_plus_script1(){
 add_filter('the_content','viva_wp_google_plus_script');
 
 function viva_wp_google_plus_script($content){
-		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
+	global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with,$saprate_by_id_exclude;
 		//echo $enable_plugin.$placing_loc.$icon_size.$language.$width.$data_ann;	 exit;
 		$newdata='';
 		//$content = get_the_content();
 		$post = get_the_ID();
 		$post_type = get_post_type( $post );
+		
+			$custom = get_option('select_custom_post_type');
+				$exdata =explode(',', $custom );	
+		  $totallenhth = count($exdata);
+			$get_exclude_id = explode(',', $saprate_by_id_exclude); 
+	 $get_total_id = count($get_exclude_id); 
 		if( $btn_with != 'excerpt' ) {
 			if($enable_plugin == 1)
-			{	//return $enable_plugin." in";
-			
+			{	 
+			 for($i=0;$i <= $totallenhth;$i++)
+ 		{ 
+ 	 
+ 			if(get_post_type($post->ID)  ==  $exdata[$i] )  {	
+ 		  for($j=0;$j<= $get_total_id;$j++)
+ 				{	
+					 if($post ==   $get_exclude_id[$j] )  {
+ 						return $newdata = get_the_content();
+ 						}
+ 				}
 				if($asyn =='asyn') {
 					$script = '<!-- Place this tag where you want the +1 button to render. -->
 						<div class="g-plusone" data-size="'.$icon_size.'" data-annotation="'.$data_ann.'" data-width="'.$width.'"></div>
@@ -282,13 +305,26 @@ function viva_wp_google_plus_script($content){
 						$newdata = $script."<br/>".$content."<br/>".$script;
 					}
 				}
-						
-			return $newdata;
+			 
+			 return $newdata;		 
+		} 
+		else {
+			 
+			  $newdata = get_the_content();
+			}
+
+		
+		}
+		 
+		 return $newdata;
+ 		 
+		
 		}
 		else
+		{
 			//return $enable_plugin." out";
 			return $content = get_the_content();
-			
+		}	
 			
 	}
 	else 
@@ -310,7 +346,7 @@ function viva_init_call(){
 	}
 
 function viva_create_google_gui(){
-		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with;
+		global $enable_plugin, $placing_loc,$icon_size,$language,$width,$data_ann,$asyn,$btn_with,$saprate_by_id_exclude;
 		
 		$above='';$below='';$abovebelow='';$small=''; $medium=''; $standard=''; $tall=''; $post=''; $page=''; $both='';$excerpt='';
 		$af= ''; $am= ''; $ar = ''; $eq=''; $bn= ''; $bg= ''; $ca= ''; $zhHK = '';$zhCN= ''; $zhTW= ''; $hr= '';
@@ -319,7 +355,7 @@ function viva_create_google_gui(){
 		$ko = ''; $lv= ''; $lt= ''; $ms= ''; $ml= ''; $mr= ''; $no= ''; $fa= ''; $pl= ''; $ptPR= ''; $ptPT = '';
 		$ro= ''; $ru = ''; $sr= ''; $sk= ''; $sl= ''; $es419= ''; $es = ''; $sw= ''; $sv= ''; $ta= ''; $te= '';
 		$th= ''; $tr= ''; $uk = ''; $ur= ''; $vi= ''; $zu= '';
-		 
+
 
 		if($enable_plugin == true)
 			$check=' checked=checked';
@@ -507,7 +543,7 @@ function viva_create_google_gui(){
 				$msg =  __('Plugin Setting Has Saved', 'wp-google-plus-one-button' );
 			}
 		$data='';
-		$data = '<div id="google_container" >
+		$data .= '<div id="google_container" >
 					<div class="wrapper">
 						<h4 id="">'.$msg.'</h4>
 					<h1>'.__('WP Google Plus One Button', 'wp-google-plus-one-button' ).'</h1>
@@ -518,6 +554,61 @@ function viva_create_google_gui(){
 									<td>'.__('Enable Google Plus Like and Share', 'wp-google-plus-one-button' ).'</td>
 									<td><input type="checkbox" name="enable_google" '.$check.'/> </td>
 								</tr>
+								<tr>
+									<td>'.__('Select Post Type', 'wp-google-plus-one-button' ).'</td><td>';
+									
+  $args = array(
+   'public'   => true,
+   '_builtin' => false
+);
+$output = 'names'; // names or objects, note names is the default
+$operator = 'and'; // 'and' or 'or'
+ $post_types = get_post_types( $args, $output, $operator ); 
+ $k=0;
+    $getdata = get_option('select_custom_post_type');
+    $exdata =explode(',', $getdata );
+   $total =count($exdata);
+	$data .='<input type="checkbox" value="page"';
+for($a=0;$a<=$total;$a++)
+  {
+  	 if($exdata[$a]== page){   
+  	 $data .='checked="checked"';
+  	   }} 
+ 	$data .='name="select_custom_post_type[]">Page<br>							
+<input type="checkbox" value="post"';
+
+for($a=0;$a<=$total;$a++)
+  {
+  	 if($exdata[$a]== post){   
+  	 $data .='checked="checked"';
+  	   }} 
+
+	$data .='name="select_custom_post_type[]">Post <br>';   
+   
+     foreach ( $post_types as $post_type ) {
+ 
+$data.='<input type="checkbox"';
+ 
+   for($a=0;$a<=$total;$a++)
+  {
+  	 if($exdata[$a]== $post_type){  
+ 	 $data.='checked="checked"';
+ 
+ 	   } }
+ 	 $data.='name="select_custom_post_type[]" value="'.$post_type.'" />'.$post_type.'<br>';
+  
+$k++;
+}
+	 $data .='</td></tr>
+	 
+									<tr>
+									<td>'.__('Page / Post id to exclude:', 'wp-google-plus-one-button' ).'</td>
+									<td>
+										 <input type="text" name="saprate_by_id_exclude" id="saprate_by_id_exclude" class="input_type" value="'.$saprate_by_id_exclude.'" placeholder="Eg: 1,2,12"> 
+									</td>
+									</tr>	 
+	 
+	 
 								<tr>
 									<td>'.__('Place Google Plus Like at', 'wp-google-plus-one-button' ).'</td>
 									<td>
