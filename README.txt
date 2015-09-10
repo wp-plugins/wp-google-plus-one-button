@@ -3,8 +3,7 @@ Contributors: vivacityinfotech.jaipur
 Donate link: http://tinyurl.com/owxtkmt
 Tags: Google Plus Share button, Google Plus Share, Plus one Share Button, Plus Social Plugin, Google plus Like, Google Like, Google Share, Like, Share, Google plus, Button, Social, Bookmark, Social Sharing, Sharing, Bookmarking, Opengraph, Protocol
 Requires at least:3.8.1
-Tested up to:4.0
-Stable tag: 1.4
+Tested up to:4.3
 License: GPLv2 or later
 
 == Description ==
@@ -73,6 +72,7 @@ PHP 5+ is supported.
 = 1.3 =
 * Pot file updated.
 * Po/mo files added for Japanese(ja_JP) and Simplified Chinese (China-zh_CN).
+* Combatible with Wordpress 4.3.
 
 = 1.2 = 
 * You can hide/show google plus like and share button on posts/archive/pages/home/excerpt.
